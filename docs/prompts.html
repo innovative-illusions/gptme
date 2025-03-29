@@ -783,6 +783,14 @@ To write to a file, use a code block with the language tag: <span class="sb">`sa
 
 <span class="sb">```</span>
 
+<span class="gu">### Examples</span>
+
+To take a screenshot and view it immediately:
+
+ToolUse(tool=&#39;ipython&#39;, args=[], content=&#39;view_image(screenshot())&#39;, kwargs=None, call_id=None, start=None)
+
+This will take a screenshot, save it to a file, and include the image in the chat.
+
 <span class="gu">## shell</span>
 
 <span class="gs">**Description:**</span> Executes shell commands.
@@ -994,7 +1002,7 @@ Available functions:
 <span class="ge">*End of Tools List.*</span>
 </pre></div>
 </div>
-<p>Tokens: 3187</p>
+<p>Tokens: 3250</p>
 </dd></dl>
 
 <dl class="py function">
