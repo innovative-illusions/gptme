@@ -162,8 +162,8 @@
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="providers.html">Providers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="agents.html">Agents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mcp.html">Model Context Protocol (MCP)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcp.html">MCP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
@@ -426,15 +426,15 @@ This is a major goal of the project, and it is important to keep in mind that th
 <h2>Startup time<a class="headerlink" href="#startup-time" title="Link to this heading">#</a></h2>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make bench-importtime
 ...
-     572388 |         gptme.llm
-     612026 |       gptme.commands
-     669362 |     gptme.chat
-     810957 |   gptme.cli
-     864345 | gptme
+     581934 |         gptme.llm
+     622993 |       gptme.commands
+     682471 |     gptme.chat
+     825171 |   gptme.cli
+     878987 | gptme
 
-real	0m1.687s
-user	0m1.434s
-sys	0m0.266s
+real	0m1.731s
+user	0m1.471s
+sys	0m0.281s
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
 </div>
@@ -446,7 +446,7 @@ make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make cloc-core
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 cloc gptme/*.py gptme/llm/*.py gptme/util/*.py gptme/tools/__init__.py gptme/tools/base.py --by-file
-github.com/AlDanial/cloc v 1.98  T=0.06 s (632.6 files/s, 146083.1 lines/s)
+github.com/AlDanial/cloc v 1.98  T=0.06 s (625.3 files/s, 144388.0 lines/s)
 ---------------------------------------------------------------------------------
 File                                          blank        comment           code
 ---------------------------------------------------------------------------------
@@ -498,7 +498,7 @@ make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make cloc-llm
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 cloc gptme/llm/*.py --by-file
-github.com/AlDanial/cloc v 1.98  T=0.02 s (295.2 files/s, 113472.9 lines/s)
+github.com/AlDanial/cloc v 1.98  T=0.02 s (295.6 files/s, 113626.4 lines/s)
 ---------------------------------------------------------------------------------
 File                                          blank        comment           code
 ---------------------------------------------------------------------------------
@@ -519,7 +519,7 @@ make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make cloc-tools
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 cloc gptme/tools/*.py --by-file
-github.com/AlDanial/cloc v 1.98  T=0.04 s (576.2 files/s, 141977.8 lines/s)
+github.com/AlDanial/cloc v 1.98  T=0.04 s (576.1 files/s, 141962.8 lines/s)
 -------------------------------------------------------------------------------------
 File                                              blank        comment           code
 -------------------------------------------------------------------------------------
@@ -557,7 +557,7 @@ make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make cloc-server
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 cloc gptme/server --by-file
-github.com/AlDanial/cloc v 1.98  T=0.02 s (581.3 files/s, 138513.9 lines/s)
+github.com/AlDanial/cloc v 1.98  T=0.02 s (581.0 files/s, 138458.3 lines/s)
 ------------------------------------------------------------------------------------------
 File                                                   blank        comment           code
 ------------------------------------------------------------------------------------------
@@ -583,7 +583,7 @@ make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make cloc-tests
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 cloc tests --by-file
-github.com/AlDanial/cloc v 1.98  T=0.03 s (1074.5 files/s, 126552.0 lines/s)
+github.com/AlDanial/cloc v 1.98  T=0.03 s (1028.8 files/s, 121827.9 lines/s)
 --------------------------------------------------------------------------------------------
 File                                                     blank        comment           code
 --------------------------------------------------------------------------------------------
@@ -591,8 +591,8 @@ tests/test_cli.py                                           81             48   
 tests/test_llm_openai.py                                    28              0            244
 tests/test_llm_anthropic.py                                 26              0            221
 tests/conftest.py                                           56             30            181
+tests/test_mcp.py                                           33             24            139
 tests/test_tool_use.py                                       8             18            127
-tests/test_mcp.py                                           30             21            122
 tests/test_prompt.py                                        35             36            120
 tests/test_server_v2.py                                     37             22            118
 tests/test_util_cli.py                                      32             23             94
@@ -624,7 +624,7 @@ tests/test_tools_shell.py                                    9             11   
 tests/test_tools_subagent.py                                 7             10             11
 tests/test_config.py                                         2              0              5
 --------------------------------------------------------------------------------------------
-SUM:                                                       796            700           2744
+SUM:                                                       799            703           2761
 --------------------------------------------------------------------------------------------
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
@@ -635,7 +635,7 @@ make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make cloc-eval
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 cloc gptme/eval/**.py --by-file
-github.com/AlDanial/cloc v 1.98  T=0.01 s (620.9 files/s, 81652.3 lines/s)
+github.com/AlDanial/cloc v 1.98  T=0.01 s (610.5 files/s, 80286.9 lines/s)
 -------------------------------------------------------------------------------------
 File                                   blank        comment           code
 -------------------------------------------------------------------------------------
@@ -659,7 +659,7 @@ make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ make cloc-total
 make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 cloc gptme/prompts.py gptme/codeblock.py gptme/tools/tmux.py gptme/tools/shell.py gptme/tools/patch.py gptme/tools/youtube.py gptme/tools/base.py gptme/tools/python.py gptme/tools/rag.py gptme/tools/computer.py gptme/tools/_browser_thread.py gptme/tools/__init__.py gptme/tools/vision.py gptme/tools/mcp_adapter.py gptme/tools/save.py gptme/tools/chats.py gptme/tools/screenshot.py gptme/tools/subagent.py gptme/tools/browser.py gptme/tools/_browser_lynx.py gptme/tools/gh.py gptme/tools/read.py gptme/tools/tts.py gptme/tools/_browser_playwright.py gptme/wut.py gptme/message.py gptme/constants.py gptme/__main__.py gptme/llm/models.py gptme/llm/llm_openai.py gptme/llm/llm_anthropic.py gptme/llm/llm_openai_models.py gptme/llm/__init__.py gptme/util/reduce.py gptme/util/context.py gptme/util/interrupt.py gptme/util/cost.py gptme/util/generate_name.py gptme/util/clipboard.py gptme/util/terminal.py gptme/util/export.py gptme/util/useredit.py gptme/util/__init__.py gptme/util/cli.py gptme/util/ask_execute.py gptme/util/prompt.py gptme/init.py gptme/mcp/client.py gptme/mcp/__init__.py gptme/server/api.py gptme/server/__main__.py gptme/server/api_v2.py gptme/server/__init__.py gptme/server/cli.py gptme/config.py gptme/dirs.py gptme/__init__.py gptme/eval/main.py gptme/eval/agents.py gptme/eval/__main__.py gptme/eval/execenv.py gptme/eval/__init__.py gptme/eval/suites/init_projects.py gptme/eval/suites/basic.py gptme/eval/suites/__init__.py gptme/eval/suites/browser.py gptme/eval/run.py gptme/eval/filestore.py gptme/eval/types.py gptme/cli.py gptme/logmanager.py gptme/__version__.py gptme/chat.py gptme/ncurses.py gptme/commands.py tests/test_server_v2.py tests/test_mcp.py tests/test_tools_chats.py tests/test_tools_shell.py tests/test_reduce.py tests/test_codeblock.py tests/test_eval.py tests/test_tools_subagent.py tests/test_server_v2_sse.py tests/test_browser.py tests/test_message.py tests/test_server.py tests/test_chat.py tests/conftest.py tests/test_config.py tests/test_tool_use.py tests/test_server_v2_auto_stepping.py tests/test_util_cli.py tests/test_prompts.py tests/test_tools_tts.py tests/test_llm_openai.py tests/test_logmanager.py tests/test_shell.py tests/test_prompt.py tests/test_llm_anthropic.py tests/test_tools_rag.py tests/test_tools_computer.py tests/test_cli.py tests/test_util.py tests/test_context.py tests/test_tools_patch.py tests/test_tools.py tests/test_tools_python.py tests/test_prompt_tools.py tests/test_server_v2_tool_confirmation.py scripts/describe_api.py scripts/reduce_context.py scripts/auto_rename_logs.py scripts/check_rst_formatting.py scripts/train/collect.py scripts/summarize_project.py scripts/gpt_todoer.py scripts/list_user_messages.py scripts/shorten_details.py scripts/treeofthoughts.py  --by-file
-github.com/AlDanial/cloc v 1.98  T=0.14 s (857.2 files/s, 151753.2 lines/s)
+github.com/AlDanial/cloc v 1.98  T=0.14 s (846.7 files/s, 150057.4 lines/s)
 --------------------------------------------------------------------------------------------
 File                                                     blank        comment           code
 --------------------------------------------------------------------------------------------
@@ -701,9 +701,9 @@ gptme/util/__init__.py                                      37             22   
 gptme/tools/__init__.py                                     42             19            145
 gptme/tools/chats.py                                        43             49            142
 gptme/tools/rag.py                                          61             75            141
+tests/test_mcp.py                                           33             24            139
 gptme/llm/llm_openai_models.py                               2             10            138
 tests/test_tool_use.py                                       8             18            127
-tests/test_mcp.py                                           30             21            122
 tests/test_prompt.py                                        35             36            120
 tests/test_server_v2.py                                     37             22            118
 gptme/tools/mcp_adapter.py                                  30             23            116
@@ -784,7 +784,7 @@ gptme/server/__init__.py                                     2              3   
 gptme/server/__main__.py                                     1              0              3
 gptme/mcp/__init__.py                                        1              0              2
 --------------------------------------------------------------------------------------------
-SUM:                                                      3772           3401          14070
+SUM:                                                      3775           3404          14087
 --------------------------------------------------------------------------------------------
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
@@ -800,7 +800,7 @@ make[2]: Entering directory &#39;/home/runner/work/gptme/gptme&#39;
 Project Overview:
   Files: 121
   Total blocks: 855
-  Average complexity: 4.057309941520468
+  Average complexity: 4.067836257309941
 
 Most Complex Functions (D+):
   gptme/tools/tmux.py
@@ -897,7 +897,7 @@ Clone found (python):
 │ Total:     │ 99             │ 18452       │ 126611       │ 8            │ 139 (0.75%)      │ 1061 (0.84%)      │
 └────────────┴────────────────┴─────────────┴──────────────┴──────────────┴──────────────────┴───────────────────┘
 Found 8 clones.
-Detection time:: 1.223s
+Detection time:: 1.371s
 make[2]: Leaving directory &#39;/home/runner/work/gptme/gptme&#39;
 </pre></div>
 </div>

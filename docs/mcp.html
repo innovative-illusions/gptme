@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Model Context Protocol (MCP) &#8212; gptme</title>
+    <title>MCP &#8212; gptme</title>
   
   
   
@@ -51,8 +51,8 @@
     <link rel="icon" href="_static/logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Server" href="server.html" />
-    <link rel="prev" title="Agents" href="agents.html" />
+    <link rel="next" title="CLI Reference" href="cli.html" />
+    <link rel="prev" title="Server" href="server.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -162,8 +162,8 @@
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="providers.html">Providers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="agents.html">Agents</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Context Protocol (MCP)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">Server</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">MCP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
@@ -370,7 +370,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Model Context Protocol (MCP)</h1>
+    <h1>MCP</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -382,9 +382,13 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-options">Configuration Options</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-configuration">Example Configuration</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp-server-examples">MCP Server Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-server">Memory Server</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-mcp-servers">Running MCP Servers</a></li>
 </ul>
             </nav>
         </div>
@@ -396,9 +400,10 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="model-context-protocol-mcp">
-<h1>Model Context Protocol (MCP)<a class="headerlink" href="#model-context-protocol-mcp" title="Link to this heading">#</a></h1>
-<p>gptme supports MCP servers, allowing integration with external tools and services through a standardized protocol.</p>
+  <section id="mcp">
+<h1>MCP<a class="headerlink" href="#mcp" title="Link to this heading">#</a></h1>
+<p>gptme acts as a MCP client supporting MCP servers (<a class="reference external" href="https://modelcontextprotocol.io/">Model Context Protocol</a>), allowing integration with external tools and services through a standardized protocol.</p>
+<p>We also intend to expose tools in gptme as MCP servers, allowing you to use gptme tools in other MCP clients.</p>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
 <p>You can configure MCP in your <code class="docutils literal notranslate"><span class="pre">~/.config/gptme/config.toml</span></code> file:</p>
@@ -430,27 +435,47 @@
 </li>
 </ul>
 </section>
-<section id="example-configuration">
-<h3>Example Configuration<a class="headerlink" href="#example-configuration" title="Link to this heading">#</a></h3>
-<p>Here’s a complete example showing how to configure an MCP weather service:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[mcp]</span>
+</section>
+<section id="mcp-server-examples">
+<h2>MCP Server Examples<a class="headerlink" href="#mcp-server-examples" title="Link to this heading">#</a></h2>
+<section id="memory-server">
+<h3>Memory Server<a class="headerlink" href="#memory-server" title="Link to this heading">#</a></h3>
+<p>The memory server is a useful example of an MCP server that provides persistent knowledge storage:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[[mcp.servers]]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;memory&quot;</span>
 <span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
-<span class="n">auto_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
-
-<span class="k">[[mcp.servers]]</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;weatherAPI&quot;</span>
-<span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
-<span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;uvx&quot;</span>
+<span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;npx&quot;</span>
 <span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;--from&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;git+https://github.com/adhikasp/mcp-weather.git&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;mcp-weather&quot;</span>
+<span class="w">    </span><span class="s2">&quot;-y&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;@modelcontextprotocol/server-memory&quot;</span>
 <span class="p">]</span>
-<span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">WEATHER_API_KEY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;your-api-key&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">MEMORY_FILE_PATH</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;/path/to/memory.json&quot;</span><span class="w"> </span><span class="p">}</span>
 </pre></div>
 </div>
-<p>MCP servers can be used to extend gptme’s capabilities with custom tools and integrations. Each server can provide its own set of tools that become available to the AI assistant during conversations.</p>
+<p>The memory server provides these tools for knowledge graph manipulation:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">create_entities</span></code>: Create new entities with observations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_relations</span></code>: Create relationships between entities</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_observations</span></code>: Add new observations to entities</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_graph</span></code>: Read the entire knowledge graph</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">search_nodes</span></code>: Search for entities and their relations</p></li>
+</ul>
 </section>
+</section>
+<section id="running-mcp-servers">
+<h2>Running MCP Servers<a class="headerlink" href="#running-mcp-servers" title="Link to this heading">#</a></h2>
+<p>Each server provides its own set of tools that become available to the assistant.</p>
+<p>MCP servers can be run in several ways:</p>
+<ul class="simple">
+<li><p>Using package managers like <code class="docutils literal notranslate"><span class="pre">npx</span></code>, <code class="docutils literal notranslate"><span class="pre">uvx</span></code>, or <code class="docutils literal notranslate"><span class="pre">pipx</span></code> for convenient installation and execution</p></li>
+<li><p>Running from source or pre-built binaries</p></li>
+<li><p>Using Docker containers</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be cautious when using MCP servers from unknown sources, as they run with the same privileges as your user.</p>
+</div>
+<p>You can find a list of available MCP servers in the <a class="reference external" href="https://modelcontextprotocol.io/examples">example servers</a> and MCP directories like <a class="reference external" href="https://mcp.so/">MCP.so</a>.</p>
 </section>
 </section>
 
@@ -466,20 +491,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="agents.html"
+       href="server.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Agents</p>
+        <p class="prev-next-title">Server</p>
       </div>
     </a>
     <a class="right-next"
-       href="server.html"
+       href="cli.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Server</p>
+        <p class="prev-next-title">CLI Reference</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -502,9 +527,13 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-options">Configuration Options</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-configuration">Example Configuration</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcp-server-examples">MCP Server Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-server">Memory Server</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-mcp-servers">Running MCP Servers</a></li>
 </ul>
   </nav></div>
 
