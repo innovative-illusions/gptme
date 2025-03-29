@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Configuration &#8212; gptme</title>
+    <title>Message Control Protocol (MCP) &#8212; gptme</title>
   
   
   
@@ -46,13 +46,13 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/asciinema-player_3.6.3.js"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'config';</script>
-    <link rel="canonical" href="https://gptme.org/docs/config.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'mcp';</script>
+    <link rel="canonical" href="https://gptme.org/docs/mcp.html" />
     <link rel="icon" href="_static/logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Providers" href="providers.html" />
-    <link rel="prev" title="Tools" href="tools.html" />
+    <link rel="next" title="Server" href="server.html" />
+    <link rel="prev" title="Agents" href="agents.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -159,10 +159,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="providers.html">Providers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="agents.html">Agents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mcp.html">Message Control Protocol (MCP)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Message Control Protocol (MCP)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a></li>
 </ul>
@@ -264,7 +264,7 @@
       
       
       
-      <li><a href="https://github.com/gptme/gptme/edit/main/docs/config.rst" target="_blank"
+      <li><a href="https://github.com/gptme/gptme/edit/main/docs/mcp.rst" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -294,7 +294,7 @@
       
       
       
-      <li><a href="_sources/config.rst" target="_blank"
+      <li><a href="_sources/mcp.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -370,7 +370,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Configuration</h1>
+    <h1>Message Control Protocol (MCP)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -380,11 +380,11 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-config">Global config</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-options">Configuration Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-configuration">Example Configuration</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-config">Project config</a></li>
 </ul>
             </nav>
         </div>
@@ -396,93 +396,61 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="configuration">
-<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h1>
-<p>gptme has two configuration files:</p>
-<ul class="simple">
-<li><p>global configuration</p></li>
-<li><p>project configuration</p></li>
-</ul>
-<p>It also supports environment variables for configuration, which take precedence over the configuration files.</p>
-<p>The CLI also supports a variety of options that can be used to override both configuration values and environment variables.</p>
-<section id="global-config">
-<span id="id1"></span><h2>Global config<a class="headerlink" href="#global-config" title="Link to this heading">#</a></h2>
-<p>The file is located at <code class="docutils literal notranslate"><span class="pre">~/.config/gptme/config.toml</span></code>.</p>
-<p>Here is an example:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[prompt]</span>
-<span class="n">about_user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;I am a curious human programmer.&quot;</span>
-<span class="n">response_preference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Don&#39;t explain basic concepts&quot;</span>
+  <section id="message-control-protocol-mcp">
+<h1>Message Control Protocol (MCP)<a class="headerlink" href="#message-control-protocol-mcp" title="Link to this heading">#</a></h1>
+<p>gptme supports MCP servers, allowing integration with external tools and services through a standardized protocol.</p>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
+<p>You can configure MCP in your <code class="docutils literal notranslate"><span class="pre">~/.config/gptme/config.toml</span></code> file:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[mcp]</span>
+<span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">auto_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 
-<span class="k">[env]</span>
-<span class="c1"># Uncomment to use Claude 3.5 Sonnet by default</span>
-<span class="c1">#MODEL = &quot;anthropic/claude-3-5-sonnet-20240620&quot;</span>
-
-<span class="c1"># One of these need to be set</span>
-<span class="c1"># If none of them are, they will be prompted for on first start</span>
-<span class="n">OPENAI_API_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="n">ANTHROPIC_API_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="n">OPENROUTER_API_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="n">XAI_API_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="n">GEMINI_API_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="n">GROQ_API_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="n">DEEPSEEK_API_KEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-
-<span class="c1"># Uncomment to use with Ollama</span>
-<span class="c1">#MODEL = &quot;local/&lt;model-name&gt;&quot;</span>
-<span class="c1">#OPENAI_BASE_URL = &quot;http://localhost:11434/v1&quot;</span>
-
-<span class="c1"># Uncomment to change tool configuration</span>
-<span class="c1">#TOOL_FORMAT = &quot;markdown&quot; # Select the tool formal. One of `markdown`, `xml`, `tool`</span>
-<span class="c1">#TOOL_ALLOWLIST = &quot;save,append,patch,ipython,shell,browser&quot;  # Comma separated list of allowed tools</span>
-<span class="c1">#TOOL_MODULES = &quot;gptme.tools,custom.tools&quot; # List of python comma separated python module path</span>
+<span class="k">[[mcp.servers]]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my-server&quot;</span>
+<span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;server-command&quot;</span>
+<span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;--arg1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--arg2&quot;</span><span class="p">]</span>
+<span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">API_KEY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;your-key&quot;</span><span class="w"> </span><span class="p">}</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">prompt</span></code> section contains options for the prompt.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> section contains environment variables that gptme will fall back to if they are not set in the shell environment. This is useful for setting the default model and API keys for <a class="reference internal" href="providers.html"><span class="doc">Providers</span></a>.</p>
-<section id="environment-variables">
-<h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading">#</a></h3>
-<p>Besides the configuration files, gptme supports several environment variables to control its behavior:</p>
-<p class="rubric">Feature Flags</p>
+<section id="configuration-options">
+<h3>Configuration Options<a class="headerlink" href="#configuration-options" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_CHECK</span></code> - Enable precommit checks (default: true if <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> present)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_COSTS</span></code> - Enable cost reporting for API calls (default: false)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_FRESH</span></code> - Enable fresh context mode (default: false)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_BREAK_ON_TOOLUSE</span></code> - Don’t stop generation when tool use occurs in stream (default: true)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_PATCH_RECOVERY</span></code> - Return file content in error for non-matching patches (default: false)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_SUGGEST_LLM</span></code> - Enable LLM-powered prompt completion (default: false)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enabled</span></code>: Enable/disable MCP support globally</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">auto_start</span></code>: Automatically start MCP servers when needed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">servers</span></code>: List of MCP server configurations</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: Unique identifier for the server</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enabled</span></code>: Enable/disable individual server</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">command</span></code>: Command to start the server</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: List of command-line arguments</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">env</span></code>: Environment variables for the server</p></li>
 </ul>
-<p class="rubric">Tool Configuration</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_TTS_VOICE</span></code> - Set the voice to use for TTS</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_VOICE_FINISH</span></code> - Wait for TTS speech to finish before exiting (default: false)</p></li>
+</li>
 </ul>
-<p class="rubric">Paths</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_LOGS_HOME</span></code> - Override the default logs folder location</p></li>
-</ul>
-<p>All boolean flags accept “1”, “true” (case-insensitive) as truthy values.</p>
 </section>
-</section>
-<section id="project-config">
-<h2>Project config<a class="headerlink" href="#project-config" title="Link to this heading">#</a></h2>
-<p>The project configuration file is intended to let the user configure how gptme works within a particular project/workspace.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The project configuration file is a very early feature and is likely to change/break in the future.</p>
-</div>
-<p>gptme will look for a <code class="docutils literal notranslate"><span class="pre">gptme.toml</span></code> file in the workspace root (this is the working directory if not overridden by the <code class="docutils literal notranslate"><span class="pre">--workspace</span></code> option). This file contains project-specific configuration options.</p>
-<p>Example <code class="docutils literal notranslate"><span class="pre">gptme.toml</span></code>:</p>
-<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;README.md&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Makefile&quot;</span><span class="p">]</span>
-<span class="n">prompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;This is gptme.&quot;</span>
+<section id="example-configuration">
+<h3>Example Configuration<a class="headerlink" href="#example-configuration" title="Link to this heading">#</a></h3>
+<p>Here’s a complete example showing how to configure an MCP weather service:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[mcp]</span>
+<span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">auto_start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="k">[[mcp.servers]]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;weatherAPI&quot;</span>
+<span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;uvx&quot;</span>
+<span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;--from&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;git+https://github.com/adhikasp/mcp-weather.git&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;mcp-weather&quot;</span>
+<span class="p">]</span>
+<span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">WEATHER_API_KEY</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;your-api-key&quot;</span><span class="w"> </span><span class="p">}</span>
 </pre></div>
 </div>
-<p>This file currently supports a few options:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">files</span></code>, a list of paths that gptme will always include in the context.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">prompt</span></code>, a string that will be included in the system prompt with a <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Current</span> <span class="pre">Project</span></code> header.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">base_prompt</span></code>, a string that will be used as the base prompt for the project. This will override the global base prompt (“You are gptme v{__version__}, a general-purpose AI assistant powered by LLMs. […]”). It can be useful to change the identity of the assistant and override some default behaviors.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rag</span></code>, a dictionary to configure the RAG tool. See <a class="reference internal" href="tools.html#rag-tool"><span class="std std-ref">RAG Tool</span></a> for more information.</p></li>
-</ul>
+<p>MCP servers can be used to extend gptme’s capabilities with custom tools and integrations. Each server can provide its own set of tools that become available to the AI assistant during conversations.</p>
+</section>
 </section>
 </section>
 
@@ -498,20 +466,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="tools.html"
+       href="agents.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Tools</p>
+        <p class="prev-next-title">Agents</p>
       </div>
     </a>
     <a class="right-next"
-       href="providers.html"
+       href="server.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Providers</p>
+        <p class="prev-next-title">Server</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -532,11 +500,11 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-config">Global config</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-options">Configuration Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-configuration">Example Configuration</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-config">Project config</a></li>
 </ul>
   </nav></div>
 

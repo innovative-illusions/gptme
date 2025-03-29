@@ -510,58 +510,6 @@ alt="Stargazers over time" /></a></p>
 <li><a href="https://discord.gg/NMaCmmkxWv">Discord</a></li>
 </ul>
 <!-- links -->
-
-<h2 id="mcp-message-control-protocol-support">MCP (Message Control
-Protocol) Support</h2>
-<p>GPTme now supports MCP servers, allowing integration with external
-tools and services through a standardized protocol. You can configure
-MCP in your <code>~/.config/gptme/config.toml</code> file:</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode toml"><code class="sourceCode toml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[mcp]</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">enabled</span> <span class="op">=</span> <span class="cn">true</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">auto_start</span> <span class="op">=</span> <span class="cn">true</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">[[mcp.servers]]</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">&quot;my-server&quot;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="dt">enabled</span> <span class="op">=</span> <span class="cn">true</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="dt">command</span> <span class="op">=</span> <span class="st">&quot;server-command&quot;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="dt">args</span> <span class="op">=</span> <span class="op">[</span><span class="st">&quot;--arg1&quot;</span><span class="op">,</span> <span class="st">&quot;--arg2&quot;</span><span class="op">]</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="op">{ </span><span class="dt">API_KEY</span><span class="op"> =</span> <span class="st">&quot;your-key&quot;</span><span class="op"> }</span></span></code></pre></div>
-<h3 id="configuration-options">Configuration Options</h3>
-<ul>
-<li><code>enabled</code>: Enable/disable MCP support globally</li>
-<li><code>auto_start</code>: Automatically start MCP servers when
-needed</li>
-<li><code>servers</code>: List of MCP server configurations
-<ul>
-<li><code>name</code>: Unique identifier for the server</li>
-<li><code>enabled</code>: Enable/disable individual server</li>
-<li><code>command</code>: Command to start the server</li>
-<li><code>args</code>: List of command-line arguments</li>
-<li><code>env</code>: Environment variables for the server</li>
-</ul></li>
-</ul>
-<h3 id="example-configuration">Example Configuration</h3>
-<p>Here's a complete example showing how to configure an MCP weather
-service:</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode toml"><code class="sourceCode toml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[mcp]</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">enabled</span> <span class="op">=</span> <span class="cn">true</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">auto_start</span> <span class="op">=</span> <span class="cn">true</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">[[mcp.servers]]</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">&quot;weatherAPI&quot;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="dt">enabled</span> <span class="op">=</span> <span class="cn">true</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="dt">command</span> <span class="op">=</span> <span class="st">&quot;uvx&quot;</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dt">args</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;--from&quot;</span><span class="op">,</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;git+https://github.com/adhikasp/mcp-weather.git&quot;</span><span class="op">,</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;mcp-weather&quot;</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="op">]</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="dt">env</span> <span class="op">=</span> <span class="op">{ </span><span class="dt">WEATHER_API_KEY</span><span class="op"> =</span> <span class="st">&quot;your-api-key&quot;</span><span class="op"> }</span></span></code></pre></div>
-<p>MCP servers can be used to extend GPTme's capabilities with custom
-tools and integrations. Each server can provide its own set of tools
-that become available to the AI assistant during conversations.</p>
 </div>
 </body>
 </html>
