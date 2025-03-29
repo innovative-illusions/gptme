@@ -29,7 +29,7 @@ def test_config_path(tmp_path) -> Generator[Path, None, None]:
         "command": pyx_cmd,
         "args": [
             *pyx_args,
-            "git+ssh://git@github.com/modelcontextprotocol/servers#subdirectory=src/sqlite",
+            "git+https://github.com/modelcontextprotocol/servers#subdirectory=src/sqlite",
             "mcp-server-sqlite",
         ],
         "env": {},
