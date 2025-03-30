@@ -405,12 +405,13 @@
 <h1>Custom Tools<a class="headerlink" href="#custom-tools" title="Link to this heading">#</a></h1>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
-<p>There are two main approaches to extending gptme’s functionality:</p>
+<p>There are three main approaches to extending gptme’s functionality:</p>
 <ol class="arabic simple">
 <li><p><strong>Custom Tools</strong>: Native gptme tools that integrate deeply with the assistant.</p></li>
 <li><p><strong>Script Tools</strong>: Standalone scripts that can be called via the shell tool.</p></li>
+<li><p><strong>MCP Tools</strong>: Tools that communicate via the Model Context Protocol, allowing language-agnostic tools that can be shared between different LLM clients.</p></li>
 </ol>
-<p>This guide covers both approaches and when to use each.</p>
+<p>This guide primarily covers the first two approaches. For information about MCP tools, see <a class="reference internal" href="mcp.html"><span class="doc">MCP</span></a>.</p>
 </section>
 <section id="script-based-tools">
 <h2>Script-based Tools<a class="headerlink" href="#script-based-tools" title="Link to this heading">#</a></h2>
