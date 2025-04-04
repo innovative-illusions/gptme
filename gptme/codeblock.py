@@ -2,6 +2,7 @@ from collections.abc import Generator
 from dataclasses import dataclass, field
 from xml.etree import ElementTree
 
+# Enable support for quadtick-style markdown code blocks
 quadticks = True
 
 
@@ -27,14 +28,12 @@ class Codeblock:
     @classmethod
     def from_markdown(cls, content: str) -> "Codeblock":
         content = content.strip()
-        if content.startswith("````"):
-            content = content[4:]
-        if content.endswith("````"):
-            content = content[:-4]
-        if content.startswith("```"):
-            content = content[3:]
-        if content.endswith("```"):
-            content = content[:-3]
+        # Strip start and end backticks, handling both triple and quad
+        for delim in ["````", "```"]:
+            if content.startswith(delim):
+                content = content[len(delim) :]
+            if content.endswith(delim):
+                content = content[: -len(delim)]
         lang = content.splitlines()[0].strip()
         return cls(lang, content[len(lang) :])
 
@@ -62,13 +61,16 @@ def _extract_codeblocks(markdown: str) -> Generator[Codeblock, None, None]:
     # speed check (early exit): check if message contains a code block
 
     # check quad ticks
-    backtick_count = markdown.count("````")
-    if quadticks and backtick_count < 2:
-        return
-
-    # check triple ticks
-    backtick_count = markdown.count("```")
-    if backtick_count < 2:
+    backtick_count = markdown.count("````") if quadticks else 0
+    is_quadtick = quadticks
+    if backtick_count == 0:
+        is_quadtick = False
+        # check triple ticks
+        backtick_count = markdown.count("```")
+        if backtick_count < 2:
+            return
+    elif backtick_count == 1:
+        # no complete quadtick codeblock
         return
 
     lines = markdown.split("\n")
@@ -81,8 +83,12 @@ def _extract_codeblocks(markdown: str) -> Generator[Codeblock, None, None]:
         # TODO: fix to actually be correct
         start_idx = sum(len(line) + 1 for line in lines[:idx])
         stripped_line = line.strip()
-        if stripped_line.startswith("````") or stripped_line.startswith("```"):
-            backtick_count = 4 if stripped_line.startswith("````") else 3
+        if (
+            stripped_line.startswith("````")
+            if is_quadtick
+            else stripped_line.startswith("```")
+        ):
+            backtick_count = 4 if is_quadtick else 3
             if not stack:  # Start of a new block
                 stack.append((stripped_line[backtick_count:], backtick_count))
                 current_lang = stripped_line[backtick_count:]
