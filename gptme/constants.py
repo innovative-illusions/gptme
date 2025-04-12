@@ -7,7 +7,7 @@ Constants
 # TODO: make these configurable
 
 TEMPERATURE = 0
-TOP_P = 0.1
+TOP_P = 1.0
 
 # separator for multiple rounds of prompts on the command line
 # demarcates the end of the user's prompt, and start of the assistant's response
