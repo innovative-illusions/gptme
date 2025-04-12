@@ -6,7 +6,7 @@ Constants
 # Discussion here: https://community.openai.com/t/cheat-sheet-mastering-temperature-and-top-p-in-chatgpt-api-a-few-tips-and-tricks-on-controlling-the-creativity-deterministic-output-of-prompt-responses/172683
 # TODO: make these configurable
 
-TEMPERATURE = 0.1
+TEMPERATURE = 0.8
 TOP_P = 0.95
 
 # separator for multiple rounds of prompts on the command line
