@@ -1,3 +1,5 @@
+.. _mcp:
+
 MCP
 ===
 
@@ -8,7 +10,7 @@ We also intend to expose tools in gptme as MCP servers, allowing you to use gptm
 Configuration
 -------------
 
-You can configure MCP in your ``~/.config/gptme/config.toml`` file:
+You can configure MCP in your :ref:`global-config` (``~/.config/gptme/config.toml``) file:
 
 .. code-block:: toml
 
@@ -23,6 +25,33 @@ You can configure MCP in your ``~/.config/gptme/config.toml`` file:
     args = ["--arg1", "--arg2"]
     env = { API_KEY = "your-key" }
 
+    # HTTP MCP Server example
+    [[mcp.servers]]
+    name = "http-server"
+    enabled = true
+    url = "https://example.com/mcp"
+    headers = { Authorization = "Bearer your-token" }
+
+We also intend to support specifying it in the :ref:`project-config`, and the ability to set it per-conversation.
+
+Management Tool
+---------------
+
+gptme includes a powerful MCP management tool that allows you to discover and dynamically load MCP servers during a conversation.
+
+Commands
+~~~~~~~~
+
+The ``mcp`` tool provides the following slash-commands:
+
+- ``/search [query]``: Search for MCP servers across registries
+- ``/info <server-name>``: Get detailed information about a specific server
+- ``/load <server-name>``: Dynamically load an MCP server into the current session
+- ``/unload <server-name>``: Unload a previously loaded MCP server
+- ``/list``: List all currently configured and loaded MCP servers
+
+Once loaded, the server's tools will be available as ``<server-name>.<tool-name>`` in the conversation.
+
 Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -32,37 +61,54 @@ Configuration Options
 
   - ``name``: Unique identifier for the server
   - ``enabled``: Enable/disable individual server
-  - ``command``: Command to start the server
-  - ``args``: List of command-line arguments
+  - ``command``: Command to start the server (for stdio servers)
+  - ``args``: List of command-line arguments (for stdio servers)
+  - ``url``: HTTP endpoint URL (for HTTP servers)
+  - ``headers``: HTTP headers dictionary (for HTTP servers)
   - ``env``: Environment variables for the server
 
 MCP Server Examples
 -------------------
 
-Memory Server
+SQLite Server
 ~~~~~~~~~~~~~
 
-The memory server is a useful example of an MCP server that provides persistent knowledge storage:
+The SQLite server provides database interaction and business intelligence capabilities through SQLite. It enables running SQL queries, analyzing business data, and automatically generating business insight memos:
 
 .. code-block:: toml
 
     [[mcp.servers]]
-    name = "memory"
+    name = "sqlite"
     enabled = true
-    command = "npx"
+    command = "uvx"
     args = [
-        "-y",
-        "@modelcontextprotocol/server-memory"
+        "mcp-server-sqlite",
+        "--db-path",
+        "/path/to/sqlitemcp-store.sqlite"
     ]
-    env = { MEMORY_FILE_PATH = "/path/to/memory.json" }
 
-The memory server provides these tools for knowledge graph manipulation:
+The server provides these core tools:
 
-- ``create_entities``: Create new entities with observations
-- ``create_relations``: Create relationships between entities
-- ``add_observations``: Add new observations to entities
-- ``read_graph``: Read the entire knowledge graph
-- ``search_nodes``: Search for entities and their relations
+Query Tools:
+
+- ``read_query``: Execute SELECT queries to read data
+- ``write_query``: Execute INSERT, UPDATE, or DELETE queries
+- ``create_table``: Create new tables in the database
+
+Schema Tools:
+
+- ``list_tables``: Get a list of all tables
+- ``describe_table``: View schema information for a specific table
+
+Analysis Tools:
+
+- ``append_insight``: Add business insights to the memo resource
+
+Resources:
+
+- ``memo://insights``: A continuously updated business insights memo
+
+The server also includes a demonstration prompt ``mcp-demo`` that guides users through database operations and analysis.
 
 Running MCP Servers
 -------------------
@@ -79,3 +125,21 @@ MCP servers can be run in several ways:
     Be cautious when using MCP servers from unknown sources, as they run with the same privileges as your user.
 
 You can find a list of available MCP servers in the `example servers <https://modelcontextprotocol.io/examples>`_ and MCP directories like `MCP.so <https://mcp.so/>`_.
+
+Managing MCP Servers
+--------------------
+
+gptme provides CLI commands to manage and test your MCP servers:
+
+.. code-block:: bash
+
+    # List all configured MCP servers and check their health
+    gptme-util mcp list
+
+    # Test connection to a specific server
+    gptme-util mcp test server-name
+
+    # Show detailed information about a server
+    gptme-util mcp info server-name
+
+These commands help you verify that your MCP servers are properly configured and accessible.

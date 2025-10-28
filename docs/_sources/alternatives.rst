@@ -29,58 +29,78 @@ Here we will briefly introduce some we like, along with their key features.
    :trim:
 
 .. list-table:: Comparison
-   :widths: 25 10 25 10 10
+   :widths: 18 9 18 9 13 9 12
    :header-rows: 1
 
    * -
      - Type
      - Focus
+     - Hosting
      - Price
+     - Funding
      - Open |nbsp| Source
    * - gptme
      - CLI
      - General purpose
+     - Local
      - Free
+     - Bootstrap
      - ✅
    * - Open Interpreter
      - CLI
      - General purpose
+     - Local
      - Free
+     - ?
      - ✅
    * - Aider
      - CLI
      - Coding
+     - Local
      - Free
+     - Bootstrap
      - ✅
    * - Moatless Tools
      - CLI
      - Coding
+     - Local
      - Free
+     - Bootstrap
      - ✅
    * - OpenHands
      - CLI/Web
      - General purpose
+     - Both
      - Free
+     - VC ($5M)
      - ✅
    * - Lovable.dev
      - Web app
      - Frontend
+     - SaaS
      - Credits
+     - VC ($8M)
      - ❌
    * - Cursor
      - IDE fork
      - Coding
+     - Desktop
      - $20/mo
+     - VC ($1.1B)
      - ❌
    * - Claude Desktop
      - Desktop app
      - General purpose
+     - Desktop
      - $20/mo
+     - VC
      - ❌
    * - Claude Projects
      - Web app
      - Chat with files
+     - SaaS
      - $20/mo
+     - VC
      - ❌
 
 
@@ -111,7 +131,7 @@ First commit: March 24, 2023.
 Aider
 ^^^^^
 
-Aider is AI pair programming in your terminal.
+`Aider <https://aider.chat/>`_ is AI pair programming in your terminal.
 
 Key features:
 
@@ -119,13 +139,14 @@ Key features:
 - Code editing capabilities
 - Conversation history
 - Customizable prompts
+- Builds a code map for context
 - Scores highly on SWE-Bench
 
 Differences to gptme:
 
 - gptme is less git-commit focused
-- gptme is more general-purpose?
-- gptme has wider array of tools?
+- gptme is more general-purpose
+- gptme has wider array of tools
 
 First commit: April 4, 2023.
 
@@ -191,12 +212,26 @@ Cursor
 
 If you are a VSCode user who doesn't mind using a fork, this seems to be it.
 
+Key features:
+
+- AI native IDE
+- Git checkpointing
+- Great tab completion ("Babble", from `acquiring Supermaven <https://www.coplay.dev/blog/a-brief-history-of-cursor-s-tab-completion>`_)
+
 Differences to gptme:
 
 - gptme is in-terminal instead of in-vscode-fork
 - gptme is extensible with tools, more general-purpose
 
   - Less true now that Cursor supports MCP
+
+Cline
+^^^^^
+
+`Cline <https://cline.bot/>`_ is a coding agent running as a VSCode extension. Similar to Cursor, but open-source and not a full VSCode fork.
+
+It also has a fork called `Roo Code <https://github.com/RooVetGit/Roo-Code>`_ (prev Roo Cline).
+
 
 Claude
 ^^^^^^
@@ -253,3 +288,13 @@ Released July 6, 2023.
 ChatGPT Canvas was OpenAI's response to Claude Artifacts (released ~1 month before).
 
 Released October 3, 2024.
+
+.. rubric:: Codex
+
+`Codex <https://github.com/openai/codex>`_ is a "lightweight coding agent that runs in your terminal".
+
+It was OpenAI's response to Claude Code (released ~2 months before). Unlike Claude Code, it is open-source.
+
+Released April 16th, 2025.
+
+(not to be confused with OpenAI's earlier Codex model)

@@ -22,17 +22,19 @@ The simplest way to extend gptme is by writing standalone scripts. These can be:
 - Easily tested and maintained
 
 Benefits of script-based tools:
- - Simple to create and maintain
- - Can be run and tested independently
- - No gptme dependency
- - Flexible language choice
- - Isolated dependencies
+
+- Simple to create and maintain
+- Can be run and tested independently
+- No gptme dependency
+- Flexible language choice
+- Isolated dependencies
 
 Limitations:
- - Requires shell tool access
- - Can't attach files/images to messages
- - Not listed in tools section
- - No built-in argument validation
+
+- Requires shell tool access
+- Can't attach files/images to messages
+- Not listed in tools section
+- No built-in argument validation
 
 For script-based tools, no registration is needed. Simply include them in the gptme context to make the agent aware of them.
 
@@ -46,11 +48,12 @@ Creating a Custom Tool
 When you need deeper integration with gptme, you can create a custom tool by defining a new instance of the ``ToolSpec`` class.
 
 Custom tools are necessary when you need to:
- - Attach files/images to messages
- - Get included in the tools section
- - Use without shell tool access
- - Validate arguments
- - Handle complex interactions
+
+- Attach files/images to messages
+- Get included in the tools section
+- Use without shell tool access
+- Validate arguments
+- Handle complex interactions
 
 The ``ToolSpec`` class requires these parameters:
 
@@ -67,16 +70,14 @@ Examples
 
 For examples of script-based tools, see:
 
-**gptme-contrib**
-    A collection of community-contributed tools and scripts:
+**gptme-contrib** - A collection of community-contributed tools and scripts:
 
-    - `Twitter CLI <https://github.com/gptme/gptme-contrib/blob/master/scripts/twitter.py>`_: Twitter client with OAuth support
-    - `Perplexity CLI <https://github.com/gptme/gptme-contrib/blob/master/scripts/perplexity.py>`_: Perplexity search tool
+- `Twitter CLI <https://github.com/gptme/gptme-contrib/blob/master/scripts/twitter.py>`_: Twitter client with OAuth support
+- `Perplexity CLI <https://github.com/gptme/gptme-contrib/blob/master/scripts/perplexity.py>`_: Perplexity search tool
 
-**Standalone Tools**
-    Independent tool repositories:
+**Standalone Tools** - Independent tool repositories:
 
-    - `gptme-rag <https://github.com/gptme/gptme-rag/>`_: Document indexing and retrieval
+- `gptme-rag <https://github.com/gptme/gptme-rag/>`_: Document indexing and retrieval
 
 For examples of custom tools, see:
 
@@ -114,19 +115,103 @@ Here's a minimal example of a custom tool:
         ],
     )
 
+Command Registration
+--------------------
+
+In addition to defining tools, you can register custom commands that users can invoke with ``/command`` syntax.
+
+Registering Commands in Tools
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Tools can register commands in their ``ToolSpec`` definition:
+
+.. code-block:: python
+
+   from gptme.tools.base import ToolSpec
+   from gptme.commands import CommandContext
+   from gptme.message import Message
+
+   def handle_my_command(ctx: CommandContext) -> Generator[Message, None, None]:
+       """Handle the /my-command."""
+       ctx.manager.undo(1, quiet=True)  # Remove command message
+       yield Message("system", "Command executed!")
+
+   tool = ToolSpec(
+       name="my_tool",
+       desc="Tool with custom command",
+       commands={
+           "my-command": handle_my_command,
+       }
+   )
+
+Command Examples
+~~~~~~~~~~~~~~~~
+
+**Commit Command (autocommit tool):**
+
+.. code-block:: python
+
+   def handle_commit_command(ctx: CommandContext) -> Generator[Message, None, None]:
+       """Handle the /commit command."""
+       ctx.manager.undo(1, quiet=True)
+       from ..util.context import autocommit
+       yield autocommit()
+
+   tool = ToolSpec(
+       name="autocommit",
+       commands={"commit": handle_commit_command}
+   )
+
+**Pre-commit Command (precommit tool):**
+
+.. code-block:: python
+
+   def handle_precommit_command(ctx: CommandContext) -> Generator[Message, None, None]:
+       """Handle the /pre-commit command."""
+       ctx.manager.undo(1, quiet=True)
+       from ..util.context import run_precommit_checks
+       success, message = run_precommit_checks()
+       if not success and message:
+           yield Message("system", message)
+
+   tool = ToolSpec(
+       name="precommit",
+       commands={"pre-commit": handle_precommit_command}
+   )
+
+Command Context
+~~~~~~~~~~~~~~~
+
+Command handlers receive a ``CommandContext`` with:
+
+- ``args``: List of command arguments
+- ``full_args``: Full argument string
+- ``manager``: LogManager for accessing conversation
+- ``confirm``: Function for user confirmation
+
+Command Best Practices
+~~~~~~~~~~~~~~~~~~~~~~
+
+1. **Undo command message**: Always call ``ctx.manager.undo(1, quiet=True)`` to remove the command from log
+2. **Yield Messages**: Return system messages to provide feedback
+3. **Handle errors**: Use try-except to handle failures gracefully
+4. **Document commands**: Mention commands in tool's ``instructions`` field
+
 Choosing an Approach
 --------------------
 Use **script-based tools** when you need:
- - Standalone functionality
- - Independent testing/development
- - Language/framework flexibility
- - Isolated dependencies
+
+- Standalone functionality
+- Independent testing/development
+- Language/framework flexibility
+- Isolated dependencies
 
 Use **custom tools** when you need:
- - File/image attachments
- - Tool listing in system prompt
- - Complex argument validation
- - Operation without shell access
+
+- File/image attachments
+- Tool listing in system prompt
+- Complex argument validation
+- Operation without shell access
 
 Registering the Tool
 --------------------
@@ -135,6 +220,7 @@ setting in your :doc:`project configuration file <config>`, which will automatic
 
 .. code-block:: toml
 
+    [env]
     TOOL_MODULES = "gptme.tools,yourpackage.your_custom_tool_module"
 
 Don't remove the ``gptme.tools`` package unless you know exactly what you are doing.

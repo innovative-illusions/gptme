@@ -39,6 +39,155 @@ There are also some integration tests in ``./tests/test-integration.sh`` which a
 
 There is also the :doc:`evals`.
 
+Telemetry
+---------
+
+gptme includes optional OpenTelemetry integration for performance monitoring and debugging. This is useful for development to understand performance characteristics and identify bottlenecks.
+
+Setup
+~~~~~
+
+To enable telemetry during development:
+
+1. Install telemetry dependencies:
+
+   .. code-block:: bash
+
+      poetry install -E telemetry
+
+2. Run Jaeger for trace visualization:
+
+   .. code-block:: bash
+
+      docker run --rm --name jaeger \
+                -p 16686:16686 \
+                -p 4317:4317 \
+                -p 4318:4318 \
+                -p 5778:5778 \
+                -p 9411:9411 \
+                cr.jaegertracing.io/jaegertracing/jaeger:latest
+
+3. Run Prometheus for metrics collection:
+
+   .. code-block:: bash
+
+      docker run --rm --name prometheus \
+                -p 9090:9090 \
+                -v $(pwd)/scripts/prometheus.yml:/prometheus/prometheus.yml \
+                prom/prometheus --web.enable-otlp-receiver
+
+4. Set the telemetry environment variables:
+
+   .. code-block:: bash
+
+      export GPTME_TELEMETRY_ENABLED=true
+      export OTLP_ENDPOINT=http://localhost:4318  # HTTP OTLP (port 4318)
+      export GPTME_OTLP_METRICS=true  # Send metrics via OTLP
+
+5. Run gptme:
+
+   .. code-block:: bash
+
+      poetry run gptme 'hello'
+      # or gptme-server
+      poetry run gptme-server
+
+6. View data:
+
+   - **Traces**: Jaeger UI at http://localhost:16686
+   - **Metrics**: Prometheus UI at http://localhost:9090
+
+Once enabled, gptme will automatically:
+
+- Trace function execution times
+- Record token processing metrics
+- Monitor request durations
+- Instrument Flask and HTTP requests
+- Expose Prometheus metrics at `/metrics` endpoint
+
+The telemetry data helps identify:
+
+- Slow operations and bottlenecks
+- Token processing rates
+- Tool execution performance
+- Resource usage patterns
+
+Available Metrics
+~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    These metrics are still merely planned and may not be available yet, or be available in a different form.
+
+The following metrics are automatically collected:
+
+- ``gptme_tokens_processed_total``: Counter of tokens processed by type
+- ``gptme_request_duration_seconds``: Histogram of request durations by endpoint
+- ``gptme_tool_calls_total``: Counter of tool calls made by tool name
+- ``gptme_tool_duration_seconds``: Histogram of tool execution durations by tool name
+- ``gptme_active_conversations``: Gauge of currently active conversations
+- ``gptme_llm_requests_total``: Counter of LLM API requests by provider, model, and success status
+- HTTP request metrics (from Flask instrumentation)
+- OpenAI/Anthropic API call metrics (from LLM instrumentations)
+
+Example Prometheus Queries
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    These queries are aspirational and won't actually work yet.
+
+Here are some useful Prometheus queries for monitoring gptme:
+
+.. code-block:: promql
+
+   # Average tool execution time by tool
+   rate(gptme_tool_duration_seconds_sum[5m]) / rate(gptme_tool_duration_seconds_count[5m])
+
+   # Most used tools
+   topk(10, rate(gptme_tool_calls_total[5m]))
+
+   # LLM request success rate
+   rate(gptme_llm_requests_total{success="true"}[5m]) / rate(gptme_llm_requests_total[5m])
+
+   # Tokens processed per second
+   rate(gptme_tokens_processed_total[5m])
+
+   # Active conversations
+   gptme_active_conversations
+
+   # Request latency percentiles
+   histogram_quantile(0.95, rate(gptme_request_duration_seconds_bucket[5m]))
+
+Environment Variables
+~~~~~~~~~~~~~~~~~~~~~
+
+- ``GPTME_TELEMETRY_ENABLED``: Enable/disable telemetry (default: false)
+- ``OTLP_ENDPOINT``: OTLP endpoint for traces and metrics (default: http://localhost:4318)
+- ``GPTME_OTLP_METRICS``: Send metrics via OTLP instead of Prometheus HTTP (default: true)
+
+Multiple Instances
+~~~~~~~~~~~~~~~~~~
+
+When running multiple gptme instances with telemetry enabled, they can all send data to the same OTLP endpoint without port conflicts:
+
+.. code-block:: bash
+
+   # All instances use the same configuration
+   export GPTME_TELEMETRY_ENABLED=true
+   export OTLP_ENDPOINT=http://your-collector:4318
+   export GPTME_OTLP_METRICS=true
+
+The OpenTelemetry Collector aggregates metrics from all instances and exports them to Prometheus on a single port that Prometheus can scrape.
+
+**Benefits:**
+
+- No port conflicts between instances
+- Centralized telemetry collection and processing
+- Single Prometheus scrape target (the collector)
+- Works across network boundaries
+- Supports traces and metrics through the same endpoint
+
 Release
 -------
 

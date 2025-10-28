@@ -51,7 +51,7 @@
     <link rel="icon" href="_static/logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Prompts" href="prompts.html" />
+    <link rel="next" title="Building Executables" href="building.html" />
     <link rel="prev" title="CLI Reference" href="cli.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -169,11 +169,13 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="building.html">Building Executables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prompts.html">Prompts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evals.html">Evals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bot.html">GitHub Bot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="finetuning.html">Finetuning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_tool.html">Custom Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hooks.html">Hooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">About</span></p>
@@ -181,7 +183,59 @@
 <li class="toctree-l1"><a class="reference internal" href="alternatives.html">Alternatives</a></li>
 <li class="toctree-l1"><a class="reference internal" href="arewetiny.html">Are we tiny?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeline.html">Timeline</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/gptme/gptme/releases">Changelog</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="changelog.html">Changelog</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.29.0.html">v0.29.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.28.3.html">v0.28.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.28.2.html">v0.28.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.28.1.html">v0.28.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.28.0.html">v0.28.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.27.0.html">v0.27.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.26.0.html">v0.26.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.25.0.html">v0.25.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.24.1.html">v0.24.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.24.0.html">v0.24.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.23.0.html">v0.23.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.22.0.html">v0.22.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.21.0.html">v0.21.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.20.0.html">v0.20.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.19.0.html">v0.19.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.18.0.html">v0.18.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.17.0.html">v0.17.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.16.0.html">v0.16.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.15.0.html">v0.15.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.14.0.html">v0.14.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.13.0.html">v0.13.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.12.0.html">v0.12.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.11.0.html">v0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.10.5.html">v0.10.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.10.4.html">v0.10.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.10.3.html">v0.10.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.10.2.html">v0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.10.1.html">v0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.10.0.html">v0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.9.4.html">v0.9.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.9.3.html">v0.9.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.9.2.html">v0.9.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.9.1.html">v0.9.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.9.0.html">v0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.8.1.html">v0.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.8.0.html">v0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.7.0.html">v0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.6.1.html">v0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.6.0.html">v0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.5.0.html">v0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.4.2.html">v0.4.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.4.1.html">v0.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.4.0.html">v0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.3.3.html">v0.3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.3.2.html">v0.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.3.1.html">v0.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.3.0.html">v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.2.2.html">v0.2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.2.1.html">v0.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releases/v0.1.1.html">v0.1.1</a></li>
+</ul>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">External</span></p>
 <ul class="nav bd-sidenav">
@@ -382,6 +436,14 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install">Install</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tests">Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#telemetry">Telemetry</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#available-metrics">Available Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-prometheus-queries">Example Prometheus Queries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-instances">Multiple Instances</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release">Release</a></li>
 </ul>
             </nav>
@@ -427,6 +489,147 @@ make<span class="w"> </span>build
 <p>There are also some integration tests in <code class="docutils literal notranslate"><span class="pre">./tests/test-integration.sh</span></code> which are used to manually test more complex tasks.</p>
 <p>There is also the <a class="reference internal" href="evals.html"><span class="doc">Evals</span></a>.</p>
 </section>
+<section id="telemetry">
+<h2>Telemetry<a class="headerlink" href="#telemetry" title="Link to this heading">#</a></h2>
+<p>gptme includes optional OpenTelemetry integration for performance monitoring and debugging. This is useful for development to understand performance characteristics and identify bottlenecks.</p>
+<section id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h3>
+<p>To enable telemetry during development:</p>
+<ol class="arabic">
+<li><p>Install telemetry dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>install<span class="w"> </span>-E<span class="w"> </span>telemetry
+</pre></div>
+</div>
+</li>
+<li><p>Run Jaeger for trace visualization:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>jaeger<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>-p<span class="w"> </span><span class="m">16686</span>:16686<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>-p<span class="w"> </span><span class="m">4317</span>:4317<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>-p<span class="w"> </span><span class="m">4318</span>:4318<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>-p<span class="w"> </span><span class="m">5778</span>:5778<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>-p<span class="w"> </span><span class="m">9411</span>:9411<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>cr.jaegertracing.io/jaegertracing/jaeger:latest
+</pre></div>
+</div>
+</li>
+<li><p>Run Prometheus for metrics collection:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>prometheus<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>-p<span class="w"> </span><span class="m">9090</span>:9090<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/scripts/prometheus.yml:/prometheus/prometheus.yml<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>prom/prometheus<span class="w"> </span>--web.enable-otlp-receiver
+</pre></div>
+</div>
+</li>
+<li><p>Set the telemetry environment variables:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">GPTME_TELEMETRY_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OTLP_ENDPOINT</span><span class="o">=</span>http://localhost:4318<span class="w">  </span><span class="c1"># HTTP OTLP (port 4318)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GPTME_OTLP_METRICS</span><span class="o">=</span><span class="nb">true</span><span class="w">  </span><span class="c1"># Send metrics via OTLP</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run gptme:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>poetry<span class="w"> </span>run<span class="w"> </span>gptme<span class="w"> </span><span class="s1">&#39;hello&#39;</span>
+<span class="c1"># or gptme-server</span>
+poetry<span class="w"> </span>run<span class="w"> </span>gptme-server
+</pre></div>
+</div>
+</li>
+<li><p>View data:</p>
+<ul class="simple">
+<li><p><strong>Traces</strong>: Jaeger UI at <a class="reference external" href="http://localhost:16686">http://localhost:16686</a></p></li>
+<li><p><strong>Metrics</strong>: Prometheus UI at <a class="reference external" href="http://localhost:9090">http://localhost:9090</a></p></li>
+</ul>
+</li>
+</ol>
+<p>Once enabled, gptme will automatically:</p>
+<ul class="simple">
+<li><p>Trace function execution times</p></li>
+<li><p>Record token processing metrics</p></li>
+<li><p>Monitor request durations</p></li>
+<li><p>Instrument Flask and HTTP requests</p></li>
+<li><p>Expose Prometheus metrics at <cite>/metrics</cite> endpoint</p></li>
+</ul>
+<p>The telemetry data helps identify:</p>
+<ul class="simple">
+<li><p>Slow operations and bottlenecks</p></li>
+<li><p>Token processing rates</p></li>
+<li><p>Tool execution performance</p></li>
+<li><p>Resource usage patterns</p></li>
+</ul>
+</section>
+<section id="available-metrics">
+<h3>Available Metrics<a class="headerlink" href="#available-metrics" title="Link to this heading">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These metrics are still merely planned and may not be available yet, or be available in a different form.</p>
+</div>
+<p>The following metrics are automatically collected:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gptme_tokens_processed_total</span></code>: Counter of tokens processed by type</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gptme_request_duration_seconds</span></code>: Histogram of request durations by endpoint</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gptme_tool_calls_total</span></code>: Counter of tool calls made by tool name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gptme_tool_duration_seconds</span></code>: Histogram of tool execution durations by tool name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gptme_active_conversations</span></code>: Gauge of currently active conversations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gptme_llm_requests_total</span></code>: Counter of LLM API requests by provider, model, and success status</p></li>
+<li><p>HTTP request metrics (from Flask instrumentation)</p></li>
+<li><p>OpenAI/Anthropic API call metrics (from LLM instrumentations)</p></li>
+</ul>
+</section>
+<section id="example-prometheus-queries">
+<h3>Example Prometheus Queries<a class="headerlink" href="#example-prometheus-queries" title="Link to this heading">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These queries are aspirational and won’t actually work yet.</p>
+</div>
+<p>Here are some useful Prometheus queries for monitoring gptme:</p>
+<div class="highlight-promql notranslate"><div class="highlight"><pre><span></span><span class="c1"># Average tool execution time by tool</span>
+<span class="kr">rate</span><span class="o">(</span><span class="nv">gptme_tool_duration_seconds_sum</span><span class="p">[</span><span class="s">5m</span><span class="p">]</span><span class="o">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kr">rate</span><span class="o">(</span><span class="nv">gptme_tool_duration_seconds_count</span><span class="p">[</span><span class="s">5m</span><span class="p">]</span><span class="o">)</span>
+
+<span class="c1"># Most used tools</span>
+<span class="k">topk</span><span class="o">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="kr">rate</span><span class="o">(</span><span class="nv">gptme_tool_calls_total</span><span class="p">[</span><span class="s">5m</span><span class="p">]</span><span class="o">))</span>
+
+<span class="c1"># LLM request success rate</span>
+<span class="kr">rate</span><span class="o">(</span><span class="nv">gptme_llm_requests_total</span><span class="p">{</span><span class="nl">success</span><span class="o">=</span><span class="p">&quot;</span><span class="s">true</span><span class="p">&quot;}[</span><span class="s">5m</span><span class="p">]</span><span class="o">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kr">rate</span><span class="o">(</span><span class="nv">gptme_llm_requests_total</span><span class="p">[</span><span class="s">5m</span><span class="p">]</span><span class="o">)</span>
+
+<span class="c1"># Tokens processed per second</span>
+<span class="kr">rate</span><span class="o">(</span><span class="nv">gptme_tokens_processed_total</span><span class="p">[</span><span class="s">5m</span><span class="p">]</span><span class="o">)</span>
+
+<span class="c1"># Active conversations</span>
+<span class="nv">gptme_active_conversations</span>
+
+<span class="c1"># Request latency percentiles</span>
+<span class="kr">histogram_quantile</span><span class="o">(</span><span class="mf">0.95</span><span class="p">,</span><span class="w"> </span><span class="kr">rate</span><span class="o">(</span><span class="nv">gptme_request_duration_seconds_bucket</span><span class="p">[</span><span class="s">5m</span><span class="p">]</span><span class="o">))</span>
+</pre></div>
+</div>
+</section>
+<section id="environment-variables">
+<h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_TELEMETRY_ENABLED</span></code>: Enable/disable telemetry (default: false)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OTLP_ENDPOINT</span></code>: OTLP endpoint for traces and metrics (default: <a class="reference external" href="http://localhost:4318">http://localhost:4318</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GPTME_OTLP_METRICS</span></code>: Send metrics via OTLP instead of Prometheus HTTP (default: true)</p></li>
+</ul>
+</section>
+<section id="multiple-instances">
+<h3>Multiple Instances<a class="headerlink" href="#multiple-instances" title="Link to this heading">#</a></h3>
+<p>When running multiple gptme instances with telemetry enabled, they can all send data to the same OTLP endpoint without port conflicts:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># All instances use the same configuration</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GPTME_TELEMETRY_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OTLP_ENDPOINT</span><span class="o">=</span>http://your-collector:4318
+<span class="nb">export</span><span class="w"> </span><span class="nv">GPTME_OTLP_METRICS</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+</div>
+<p>The OpenTelemetry Collector aggregates metrics from all instances and exports them to Prometheus on a single port that Prometheus can scrape.</p>
+<p><strong>Benefits:</strong></p>
+<ul class="simple">
+<li><p>No port conflicts between instances</p></li>
+<li><p>Centralized telemetry collection and processing</p></li>
+<li><p>Single Prometheus scrape target (the collector)</p></li>
+<li><p>Works across network boundaries</p></li>
+<li><p>Supports traces and metrics through the same endpoint</p></li>
+</ul>
+</section>
+</section>
 <section id="release">
 <h2>Release<a class="headerlink" href="#release" title="Link to this heading">#</a></h2>
 <p>To make a release, simply run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">release</span></code> and follow the instructions.</p>
@@ -454,11 +657,11 @@ make<span class="w"> </span>build
       </div>
     </a>
     <a class="right-next"
-       href="prompts.html"
+       href="building.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Prompts</p>
+        <p class="prev-next-title">Building Executables</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -481,6 +684,14 @@ make<span class="w"> </span>build
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install">Install</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tests">Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#telemetry">Telemetry</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#available-metrics">Available Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-prometheus-queries">Example Prometheus Queries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-instances">Multiple Instances</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#release">Release</a></li>
 </ul>
   </nav></div>
