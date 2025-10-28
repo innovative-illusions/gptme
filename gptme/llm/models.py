@@ -347,8 +347,8 @@ MODELS: dict[Provider, dict[str, _ModelDictMeta]] = {
             "max_output": 12_000,
             "price_input": 0.00,
             "price_output": 0.00,
-            "supports_vision": false,
-            "supports_reasoning": true
+            "supports_vision": False,
+            "supports_reasoning": True
         }
     },
 }
